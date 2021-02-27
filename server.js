@@ -67,6 +67,7 @@ app.get('/:page',function(req,res,next){
 
                     request(TEAM_URL + SPORT_MAP[sport].id, function(err, response, body) {
                         if (!err && response.statusCode < 400) {
+                            context.description = JSON.parse(body).leagues[0].strDescriptionEN;
                             res.render('sport', context);
                         }
                         else {
