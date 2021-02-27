@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>{{sport}}</h1>
+</div>
+
+<div class="container" style="height: 300px;overflow-y: auto;">
+    <h3>Latest Results</h3>
+    <ul>
+        {{#each scores}}
+        <li>Home: {{this.home}} - {{this.homeScore}}</li>
+        <li>Away: {{this.away}} - {{this.awayScore}}</li>
+        <li></li>
+        {{/each}}
+    </ul>
+</div>
+
+<div class="container">
+    <h4><a href="{{leagueLink}}" target="_blank">{{leagueLink}}</a></h4>
+</div>
