@@ -1,0 +1,40 @@
+/* Variables */
+:root {
+    --roundness: 25px;
+    --max-width: 75%;
+}
+
+/* General Styles */
+body {
+    background-color: #ADADAD;
+    text-align: center;
+}
+
+.rounded-corners {
+    border-radius: var(--roundness);
+}
+
+.container {
+    max-width: var(--max-width);
+}
+
+/* Main Page */
+.carousel-item {
+    margin-top: 20px;
+}
+.carousel-item > img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--roundness);
+}
+
+.carousel-item > a {
+    font-size: 20px;
+}
+
+/* About Page */
+#fam {
+    margin-top: 20px;
+    max-width: 60%;
+    height: auto;
+}

@@ -4,21 +4,28 @@ const TEAM_URL = 'https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id=
 const SPORT_MAP = {
     'basketball': {
         'id': 4387,
-        'leagueLink': 'https://www.nba.com'
+        'displayName': 'Basketball',
+        'leagueLink': 'https://www.nba.com',
+        'logo': 'https://www.thesportsdb.com/images/media/league/logo/ypuryw1421971236.png/preview'
     },
     'hockey': {
         'id': 4380,
-        'leagueLink': 'https://www.nhl.com'
+        'displayName': 'Hockey',
+        'leagueLink': 'https://www.nhl.com',
+        'logo': 'https://www.thesportsdb.com/images/media/league/logo/qguaew1557140752.png/preview'
     },
     'soccer': {
         'id': 4332,
-        'leagueLink': 'https://www.legaseriea.it/en'
+        'displayName': 'Soccer',
+        'leagueLink': 'https://www.legaseriea.it/en',
+        'logo': 'https://www.thesportsdb.com/images/media/league/logo/r7q96i1557058508.png/preview'
     }
 };
 
-var express = require('express');
-var request = require('request');
-var helpers = require('./helpers/helpers');
+const express = require('express');
+const request = require('request');
+const helpers = require('./helpers/helpers');
+const Parser  = require('json2csv');
 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -55,10 +62,13 @@ app.get('/:page',function(req,res,next){
         case 'hockey':
         case 'soccer':
             let sport = page;
-            context.sport  = sport[0].toUpperCase() + sport.slice(1); // https://stackoverflow.com/a/7224605
+            context.title      = SPORT_MAP[sport].displayName;
             context.leagueLink = SPORT_MAP[sport].leagueLink;
+            context.logo       = SPORT_MAP[sport].logo;
+            context.sport      = sport;
 
             let url = SCORE_URL + (sport == 'hockey' ? 'icehockey' : sport) + '.php';
+
             request(url, function(err, response, body) {
                 if (!err && response.statusCode < 400) {
                     let scores = JSON.parse(body);
@@ -88,6 +98,34 @@ app.get('/:page',function(req,res,next){
         default:
             next();
     }
+});
+
+app.get('/scores/:sport', function(req, res, next) {
+    let sport = req.params.sport;
+    let url   = SCORE_URL + (sport == 'hockey' ? 'icehockey' : sport) + '.php';
+
+    request(url, function(err, response, body) {
+        if (!err && response.statusCode < 400) {
+            let scores = helpers.formatScores(sport, JSON.parse(body));
+
+            let content = `${SPORT_MAP[sport].displayName} Scores\n\n`;
+
+            scores.forEach(game => {
+                content += `${game.away} - ${game.awayScore}\n`
+                content += "@\n"
+                content += `${game.home} - ${game.homeScore}\n`
+                content += "-------\n"
+            });
+
+            // https://gist.github.com/davidbanham/1186032
+            res.status(200).attachment(`${sport}-scores.txt`).send(content);
+        }
+        else {
+
+            console.log(err);
+            next(err);
+        }
+    });
 });
 
 app.use(function(req,res){
