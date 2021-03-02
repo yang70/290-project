@@ -148,6 +148,14 @@ app.get('/scores/:sport', function(req, res, next) {
     });
 });
 
+app.post('/vote-again',function(req,res){
+    var context = {};
+
+    req.session.destroy();
+
+    res.render('home', context);
+});
+
 app.use(function(req,res){
     res.status(404);
     res.render('404');

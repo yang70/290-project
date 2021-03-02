@@ -59,6 +59,12 @@
                 <li>{{this.sport}}: {{this.votes}}</li>
                 {{/each}}
             </ul>
+
+            <form action="/vote-again" method="post">
+                <fieldset>
+                    <input class="btn btn-primary" type="submit" value="Vote Again">
+                </fieldset>
+            </form>
         </div>
         {{else}}
         <div class="col">
@@ -67,7 +73,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="input-group col-8" style="display: block;text-align: center;">
+        <div class="input-group col-8 form-container">
             <form action="/" method="post">
                 <fieldset>
                     <label>Baseball
