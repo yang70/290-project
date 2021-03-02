@@ -1,4 +1,4 @@
-const PORT      = 3000;
+const PORT      = 4860;
 const SCORE_URL = 'https://www.thesportsdb.com/api/v1/json/1/latest'
 const TEAM_URL  = 'https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id='
 const SPORT_MAP = {
