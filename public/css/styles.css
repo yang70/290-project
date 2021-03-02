@@ -23,6 +23,14 @@ h1 {
     max-width: var(--max-width);
 }
 
+li {
+    list-style-type: none;
+}
+
+h2, h4 {
+    margin-top: var(--buffer-space);
+}
+
 /* Main Page */
 .carousel-item {
     margin-top: var(--buffer-space);
@@ -37,9 +45,32 @@ h1 {
     font-size: 20px;
 }
 
+#sportschart {
+    margin-top: var(--buffer-space);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Sports Pages */
+.overflow {
+    height: 300px;
+    width: 50%;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: var(--roundness);
+}
+
+
+
 /* About Page */
 #fam {
     margin-top: var(--buffer-space);
     max-width: 60%;
     height: auto;
+}
+
+article {
+    margin-top: var(--buffer-space);
+    text-align: left;
 }

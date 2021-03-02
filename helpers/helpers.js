@@ -1,3 +1,12 @@
+const VOTING_SPORTS = [
+    'baseball',
+    'football',
+    'tennis',
+    'other'
+]
+
+const fs = require('fs');
+
 function handleBasketball(scores) {
     let games = [];
 
@@ -60,5 +69,19 @@ module.exports = {
             default:
                 throw('Unknown Sport');
         }
+    },
+
+    votingResults: function() {
+        var results = [];
+
+        VOTING_SPORTS.forEach(sport => {
+            let voteFile = `./votes/${sport}.txt`;
+            let votes    = fs.readFileSync(voteFile, {encoding: 'utf8', flag: 'r'});
+            let capSport = sport.charAt(0).toUpperCase() + sport.slice(1); // https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+
+            results.push({sport: capSport, votes: parseInt(votes)});
+        });
+
+        return results;
     }
 }

@@ -1,4 +1,5 @@
 <div class="container">
+    <h1>SPORTS!</h1>
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
@@ -11,21 +12,27 @@
             <div class="carousel-item active">
                 <img class="d-block w-100" src="https://www.thesportsdb.com/images/media/league/fanart/txxqtv1421973480.jpg/preview" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <a href="/basketball">Click for Basketball Scores!</a>
+                    <h3>
+                        <a href="/basketball">Click for Basketball Scores!</a>
+                    </h3>
                 </div>
             </div>
 
             <div class="carousel-item">
                 <img class="d-block w-100" src="https://www.thesportsdb.com/images/media/league/fanart/vvwxuu1421795620.jpg/preview" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <a href="/hockey">Click for Hockey Scores!</a>
+                    <h3>
+                        <a href="/hockey">Click for Hockey Scores!</a>
+                    </h3>
                 </div>
             </div>
 
             <div class="carousel-item">
                 <img class="d-block w-100" src="https://www.thesportsdb.com/images/media/league/fanart/spqxtv1425356374.jpg/preview" alt="Third slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <a href="/soccer">Click for Soccer Scores!</a>
+                    <h3>
+                        <a href="/soccer">Click for Soccer Scores!</a>
+                    </h3>
                 </div>
             </div>
         </div>
@@ -41,5 +48,50 @@
 
             <span class="sr-only">Next</span>
         </a>
+    </div>
+
+    <div class="row justify-content-center">
+        {{#if vote}}
+        <div class="col">
+            <h2>Sport survey results, thanks for voting!</h2>
+            <ul>
+                {{#each votingResults}}
+                <li>{{this.sport}}: {{this.votes}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        {{else}}
+        <div class="col">
+            <h2>What sport should be added next?</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="input-group col-8" style="display: block;text-align: center;">
+            <form action="/" method="post">
+                <fieldset>
+                    <label>Baseball
+                        <input type="radio" name="newSport" value="baseball">
+                    </label>
+
+                    <label>Football
+                        <input type="radio" name="newSport" value="football">
+                    </label>
+
+                    <label>Tennis
+                        <input type="radio" name="newSport" value="tennis">
+                    </label>
+
+                    <label>Other
+                        <input type="radio" name="newSport" value="other">
+                    </label>
+
+                    <br>
+
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </fieldset>
+            </form>
+        </div>
+        {{/if}}
     </div>
 </div>

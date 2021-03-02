@@ -4,13 +4,13 @@
     <img src="{{logo}}" alt="logo">
 </div>
 
-<div class="container" style="height: 300px;overflow-y: auto;">
+<div class="container overflow">
     <h3>Latest Results</h3>
     <ul>
         {{#each scores}}
         <li>Home: {{this.home}} - {{this.homeScore}}</li>
         <li>Away: {{this.away}} - {{this.awayScore}}</li>
-        <li></li>
+        <br>
         {{/each}}
     </ul>
 </div>

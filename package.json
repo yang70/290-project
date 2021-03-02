@@ -1,7 +1,7 @@
 {
-  "name": "hello-world",
+  "name": "project",
   "version": "1.0.0",
-  "description": "Hello world with express and node.js",
+  "description": "Project with express and node.js",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,8 +13,6 @@
     "express": "^4.13.2",
     "express-handlebars": "^5.1.0",
     "express-session": "^1.11.3",
-    "json2csv": "^5.0.6",
-    "mysql": "^2.8.0",
     "request": "^2.88.2"
   }
 }

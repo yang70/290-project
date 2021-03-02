@@ -1,6 +1,6 @@
-const PORT = 3000;
+const PORT      = 3000;
 const SCORE_URL = 'https://www.thesportsdb.com/api/v1/json/1/latest'
-const TEAM_URL = 'https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id='
+const TEAM_URL  = 'https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id='
 const SPORT_MAP = {
     'basketball': {
         'id': 4387,
@@ -24,12 +24,12 @@ const SPORT_MAP = {
 
 const express = require('express');
 const request = require('request');
+const fs      = require('fs');
 const helpers = require('./helpers/helpers');
-const Parser  = require('json2csv');
 
-var app = express();
+var app        = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-var session = require('express-session');
+var session    = require('express-session');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,7 +43,9 @@ app.set('port', PORT);
 app.get('/',function(req,res,next){
     var context = {};
 
-    if(!req.session.vote){
+    if(req.session.vote){
+        context.vote = true;
+        context.votingResults = helpers.votingResults();
     }
 
     res.render('home',context);
@@ -51,6 +53,24 @@ app.get('/',function(req,res,next){
 
 app.post('/',function(req,res){
     var context = {};
+
+    if (req.body.newSport) {
+        context.vote = req.session.vote = true;
+
+        let voteFile = `./votes/${req.body.newSport}.txt`;
+
+        // https://www.geeksforgeeks.org/node-js-fs-readfilesync-method/
+        let votes = fs.readFileSync(voteFile, {encoding: 'utf8', flag: 'r'});
+
+        let updatedVotes = parseInt(votes) + 1;
+
+        // https://www.geeksforgeeks.org/node-js-fs-writefilesync-method/
+        fs.writeFileSync(voteFile, updatedVotes.toString());
+    }
+
+    context.votingResults = helpers.votingResults();
+
+    res.render('home', context);
 });
 
 app.get('/:page',function(req,res,next){
